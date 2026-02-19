@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bun Page</title>
+    <link rel="stylesheet" href="Style.css">
+    <link rel="icon" href="pictures/woosh.png" type="image/png">
+</head>
+
+<body>
+    <div id="mood_filter"></div>
+
+    <div id="page">
+        <div id="dark_overlay"></div>
+        <!-- Page top -->
+        <div id="bg_image"></div>
+
+        <!-- Take On Me background video (hidden by default) -->
+        <video id="take_on_me_bg" playsinline muted loop preload="auto">
+            <source src="music_player/take_on_me.mp4" type="video/mp4">
+        </video>
+
+        <div class="navbar"></div>
+
+        <div id="link_boxes" class="link_boxes">
+            <img id="link_icon" src="pictures/link_black.png" alt="link_black">
+        </div>
+
+        <div id="link_panel" class="link_panel">
+            <div id="search_bar" class="search_bar">
+                <input type="text" id="search_input" placeholder="search">
+            </div>
+            <div class="links_columns">
+                <div class="column">
+                    <h4>Quick access</h4>
+                    <a href="https://www.google.com">Google</a>
+                    <a href="https://www.youtube.com">Youtube</a>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Richard Rollington</a>
+                </div>
+
+                <div class="column">
+                    <h4>Streaming</h4>
+                    <a href="https://www.primevideo.com/region/eu/storefront">Primevideo</a>
+                    <a href="https://play.hbomax.com">HBO</a>
+                </div>
+
+                <div class="column">
+                    <h4>Art</h4>
+                    <a href="https://www.artstation.com/?sort_by=community&dimension=all">ArtStation</a>
+                    <a href="https://es.pinterest.com">Pinterest</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page bottom -->
+        <footer class="footer">
+            <h5 class="footer_text">©Bun 2026</h2>
+        </footer>
+
+
+        <!-- animation -->
+        <img src="pictures/animation/circle_walk.gif" id="circle_walk" class="circle_walk" alt="circle character">
+        <script src="script.js"></script>
+
+        <!-- Game -->
+
+        <div id="game_ui">
+            <div id="score"> Score: 0</div>
+            <div id="game_timer">Time: 30</div>
+        </div>
+
+
+        <!-- Final score -->
+        <div id="final_score_overlay"
+            style="display:none;
+    position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
+    color:white; font-size:50px; text-align:center; flex-direction:column; justify-content:center; align-items:center;">
+            <div id="final_score_label">Score:</div>
+            <div id="final_score_number">0</div>
+        </div>
+
+
+        <!-- What how!? -->
+        <div id="what_how_overlay">
+
+            <div class="panel top_panel"></div>
+            <div class="panel bottom_panel"></div>
+            <div class="panel left_panel"></div>
+            <div class="panel right_panel"></div>
+
+            <div class="center_border"></div>
+
+            <div id="what_text" class="what_text"> WHAT?</div>
+            <div id="how_text" class="how_text">HOW?</div>
+        </div>
+        <audio id="what_how_sound" src="pictures/audio/what_how_sound.mp3"></audio>
+
+        <!-- Music player -->
+        <div id="floating_container">
+            <div class="floating_box" id="music_button">
+                <img src="music_player/note.png" id="note">
+
+
+                <div id="music_panel">
+                    <p id="song_title"></p>
+
+                    <div id="music_controls">
+                        <button id="prev_song"> <img src="music_player/back.png" alt="back"></button>
+                        <button id="play_pause"> <img src="music_player/play.png" alt="Play/pause"></button>
+                        <button id="next_song"> <img src="music_player/next.png" alt="next"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timer (works like music box: one element expands) -->
+            <div class="floating_box" id="second_box">
+                <img src="pictures/stop_watch_black.png" id="timerIcon" alt="Timer">
+                <div id="timer_panel">
+                    <div id="timer_widget">
+                        <div id="timer_clock">00:00:00</div>
+
+                        <div id="timer_controls">
+                            <select id="timer_mode">
+                                <option value="up">Stopwatch</option>
+                                <option value="down">Countdown</option>
+                            </select>
+
+                            <div id="countdown_inputs">
+                                <input id="cd_hours" type="number" min="0" value="0">
+                                <input id="cd_minutes" type="number" min="0" max="59" value="1">
+                                <input id="cd_seconds" type="number" min="0" max="59" value="0">
+                            </div>
+                        </div>
+
+                        <div id="timer_buttons">
+                            <button id="startBtn">Start</button>
+                            <button id="pauseBtn">pause</button>
+                            <button id="resetBtn">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+            <!-- songs -->
+            <audio id="audio_player">
+                <source src="music_player/maplestory_ellinia_theme.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <!-- Scripts -->
+            <script src="link_box.js" defer></script>
+            <script src="music_player.js"></script>
+            <script src="search_bar.js" defer></script>
+            <script src="timer.js"></script>
+</body>
+
+</html>

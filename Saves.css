@@ -1,0 +1,657 @@
+/* Background */
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(#8b1b24, #3a0810);
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    flex-direction: column;
+
+    /* prevent scrolling */
+    overflow: hidden; 
+}
+
+#dark_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    z-index: 10;
+    transition: background-color 5s ease;
+}
+
+/* Page top */
+
+#bg_image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: url("Pictures/Background.jpg") center/cover no-repeat;
+
+    z-index: -1;
+    /* behind everything */
+    pointer-events: none;
+    /* doesn't block clicks */
+
+    opacity: 0.1;
+    /* lower opacity here */
+    mix-blend-mode: soft-light;
+
+    animation: bgWobble 12s ease-in-out infinite;
+}
+
+@keyframes bgWobble {
+    0% {
+        transform: scale(2) rotate(0deg);
+    }
+
+    25% {
+        transform: scale(2) rotate(0.3deg);
+    }
+
+    50% {
+        transform: scale(2) rotate(0deg);
+    }
+
+    75% {
+        transform: scale(2) rotate(-0.3deg);
+    }
+
+    100% {
+        transform: scale(2) rotate(0deg);
+    }
+}
+
+.navbar {
+    padding: 20px;
+    z-index: 20001;
+    background-color: #4d1919;
+    border-bottom: 2px solid #a23333;
+    transition: filter ease 0.3s, border-top ease 0.3s, mix-blend-mode ease 0.3s;
+
+}
+
+.navbar.playing {
+    border-bottom: 2px solid #cf8888;
+    filter: drop-shadow(0 0 20px rgba(223, 142, 142, 0.466));
+    background-color: #9e3345;
+}
+
+.navbar a:hover {
+    color: lightblue
+}
+
+/* Link box */
+/* Link box */
+#link_boxes {
+    position: fixed;
+    top: 60px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #5e23233f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    z-index: 1001;
+}
+
+/* Hide icon while expanding */
+#link_boxes img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+/* Ring effect */
+#link_boxes::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border: 1px solid rgba(209, 76, 76, 0.685);
+    border-radius: inherit;
+    pointer-events: none;
+    transition: border 0.3s ease, filter 0.3s ease, border-color 0.3s ease;
+}
+
+#link_boxes.playing::before {
+    border: 3px solid rgba(209, 76, 76, 0.685);
+    box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.144);
+    border-color: rgba(255, 255, 255, 0.9);
+    animation: pulseRing 2s infinite alternate ease-in-out;
+}
+
+#link_boxes.open {
+    width: calc(100vw - 290px);
+    height: 70vh;
+    border-radius: 15px;
+    background: rgba(70, 31, 31, 0.671);
+}
+
+#link_boxes.fade-background {
+    background: rgba(20, 0, 0, 0.185);
+    transition: background 0.4s ease;
+}
+
+/* Fade out icon when open */
+#link_boxes.open img {
+    opacity: 0;
+}
+
+
+#link_panel {
+    position: fixed;         
+    top: 60px;                
+    left: 20px;              
+    width: 60px;              
+    height: 60px;             
+    padding: 20px;
+
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: top left;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+    transition: transform 0.4s ease, opacity 0.4s ease, width 0.4s ease, height 0.4s ease;
+    z-index: 1002;            
+}
+
+#link_boxes.open + #link_panel {
+    width: calc(100vw - 290px);
+    height: 70vh;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.panel_content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.links_columns {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    gap: 20px;
+    width: auto;
+    height: auto;
+
+    transform: translate(-25px, -240px);
+}
+
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    width: 240px;            
+    padding: 20px;
+}
+
+
+.column h4 {
+    display: flex;
+    justify-content: center;
+
+    margin: 0 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+    font-size: 20px;
+    white-space: nowrap;      
+}
+
+.column a {
+    display: flex;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.column a:hover {
+    color: lightgray;
+    transform: scale(1.05);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    height: 58px;
+    width: 100%;
+    background-color: #350e0e;
+    border-top: 2px solid #a23333;
+    padding: 10px;
+    z-index: 20001;
+    transition: filter ease 0.3s, border-top ease 0.3s, mix-blend-mode ease 0.3s;
+}
+
+.footer.playing {
+    border-top: 2px solid #b45c5c;
+    filter: drop-shadow(0 0 20px rgb(255, 16, 16));
+    background-color: #440d16;
+}
+
+.footer_text {
+    color: white;
+    text-align: center;
+}
+
+.circle_walk {
+    position: fixed;
+    bottom: 70px;
+    left: 0;
+    width: 100px;
+    animation: moveCircle 20s linear infinite;
+    z-index: 10;
+    cursor: pointer;
+}
+
+@keyframes moveCircle {
+    0% {
+        transform: translateX(120vw) scaleX(-1);
+    }
+
+    30% {
+        transform: translateX(-150px) scaleX(-1);
+    }
+
+    50% {
+        transform: translateX(-150px) scaleX(1);
+    }
+
+    80% {
+        transform: translateX(120vw) scaleX(1);
+    }
+
+    100% {
+        transform: translateX(120vw) scaleX(1);
+    }
+}
+
+@keyframes moveLeft {
+    0% {
+        left: 100vw;
+    }
+
+    100% {
+        left: -120px;
+    }
+}
+
+@keyframes moveRight {
+    0% {
+        left: -120px;
+    }
+
+    100% {
+        left: 100vw;
+    }
+}
+
+
+/* Game UI */
+
+#game_ui {
+    display: none;
+    position: fixed;
+    top: 600px;
+    right: 20px;
+    color: white;
+    font-family: sans-serif;
+    font-size: 20px;
+    text-align: right;
+    z-index: 1000;
+}
+
+#score {
+    margin-bottom: 5px;
+}
+
+.circle {
+    transform: rotate(180deg);
+}
+
+/* Final score */
+
+#final_score_overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 12000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#final_score_label {
+    font-size: 50px;
+    /* "Score:" text */
+}
+
+#final_score_number {
+    font-size: 120px;
+    /* "0" number, bigger */
+    font-weight: bold;
+}
+
+
+
+
+/* What? How? */
+
+#what_how_overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+#what_how_overlay .panel {
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    z-index: 10000;
+}
+
+/* Top panel */
+#what_how_overlay .top_panel {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+}
+
+/* Bottom panel */
+#what_how_overlay .bottom_panel {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+}
+
+/* Left panel */
+#what_how_overlay .left_panel {
+    top: 30%;
+    left: 0;
+    width: 30%;
+    height: 40%;
+}
+
+/* Right panel */
+#what_how_overlay .right_panel {
+    top: 30%;
+    right: 0;
+    width: 30%;
+    height: 40%;
+}
+
+#what_how_overlay .center_border {
+    position: absolute;
+
+    top: 29.5%;
+    left: 29.5%;
+
+    width: 41%;
+    height: 41%;
+
+    border: 1px solid white;
+    box-sizing: border-box;
+    z-index: 10003;
+}
+
+/* Text */
+#what_how_overlay .what_text,
+#what_how_overlay .how_text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 10001;
+}
+
+#what_how_overlay .what_text {
+    top: 20%;
+}
+
+#what_how_overlay .how_text {
+    bottom: 20%;
+}
+
+/* Music player */
+
+/* --- Music button --- */
+#music_button {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    z-index: 1001;
+    border-radius: 50%;
+    background: #3b25253f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: visible;
+    transition: all 0.4s ease;
+}
+
+/* Button border effect */
+#music_button::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border: 1px solid rgba(209, 76, 76, 0.685);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+    border-radius: inherit;
+    pointer-events: none;
+    transition: border 0.3s ease, filter 0.3s ease, border-color 0.3s ease;
+}
+
+#music_button.playing::before {
+    border: 3px solid rgba(209, 76, 76, 0.685);
+    box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.144);
+    border-color: rgba(255, 255, 255, 0.9);
+    animation: pulseRing 2s infinite alternate ease-in-out;
+}
+
+@keyframes pulseRing {
+    0% {
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    }
+
+    100% {
+        filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.9));
+    }
+}
+
+/* Main note icon */
+#Note {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+#Note.playing {
+    content: url('Music_player/Note\ _white.png');
+    filter: drop-shadow(0 0 10px white);
+    mix-blend-mode: lighten;
+}
+
+/* --- Open state --- */
+#music_button.open {
+    width: 200px;
+    height: 150px;
+    border-radius: 15px;
+}
+
+#music_button.open::before {
+    border-radius: inherit;
+}
+
+#music_button.open #Note {
+    opacity: 0;
+}
+
+/* --- Panel --- */
+#music_panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 1;
+}
+
+/* --- Show panel when open --- */
+#music_button.open #music_panel {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* --- Controls --- */
+#music_controls {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+#music_controls button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+#music_controls button:hover img {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+}
+
+#prev_song img,
+#next_song img {
+    width: 35px;
+    height: 35px;
+    transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+/* --- Song title --- */
+#song_title {
+    margin-top: 10px;
+    text-align: center;
+    color: white;
+    transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+#song_title:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.836));
+}
+
+#play_pause img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.petal {
+    position: fixed;
+    top: -20px;
+    width: 5px;
+    height: 5px;
+    background: pink;
+    border-radius: 50% 50% 50% 0;
+    /* makes a petal-ish shape */
+    transform: rotate(45deg);
+    opacity: 0.8;
+    z-index: 1;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+.front-petal {
+    position: fixed;
+    top: -20px;
+    width: 5px;
+    height: 5px;
+    background: pink;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(45deg);
+    opacity: 0.8;
+    z-index: 2000;
+    /* Higher than normal petals */
+    pointer-events: none;
+    animation: fall linear forwards;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(50vh) translateX(20px) rotate(180deg);
+    }
+
+    100% {
+        transform: translateY(100vh) translateX(-20px) rotate(360deg);
+    }
+}
