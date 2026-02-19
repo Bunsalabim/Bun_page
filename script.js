@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
 
             case "square":
-                enemy.src = "pictures/animation/Square_walk.gif";
-                enemyDeath = "pictures/animation/Square_death.gif";
+                enemy.src = "pictures/animation/square_walk.gif";
+                enemyDeath = "pictures/animation/square_death.gif";
                 health = 5;
                 points = 10;
                 speed = 12000;
@@ -53,8 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
 
             case "triangle":
-                enemy.src = "pictures/animation/Triangle_walk.gif";
-                enemyDeath = "pictures/animation/Triangle_death.gif";
+                enemy.src = "pictures/animation/triangle_walk.gif";
+                enemyDeath = "pictures/animation/triangle_death.gif";
                 health = 1;
                 points = 20;
                 speed = 2000;

@@ -897,6 +897,83 @@ body.take_on_me #bg_image {
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
 }
 
+/* Volume container - LEFT outside */
+#volume_side {
+  position: absolute;
+  left: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+
+  opacity: 0;
+  pointer-events: none;          /* IMPORTANT: can't block clicks when closed */
+  transition: opacity 0.25s ease;
+}
+
+/* Only interactive when the music player is OPEN */
+#music_button.open #volume_side {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* The slider itself (we rotate it to be vertical) */
+#volume_slider {
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 90px;                   /* becomes height after rotate */
+  height: 10px;                  /* becomes width after rotate */
+
+  transform: rotate(-90deg);
+  transform-origin: center;
+
+  background: rgba(255,255,255,0.25); /* track */
+  border-radius: 999px;              /* rounded tips */
+
+  cursor: pointer;
+}
+
+/* Track (Chrome) */
+#volume_slider::-webkit-slider-runnable-track {
+  height: 10px;
+  background: transparent;
+  border-radius: 999px;
+}
+
+/* Ball (Chrome) */
+#volume_slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+
+  margin-top: -4px;              /* centers ball on track */
+  box-shadow: 0 0 8px rgba(255,255,255,0.35);
+}
+
+/* Glow when playing (optional) */
+#music_button.playing #volume_slider::-webkit-slider-thumb {
+  box-shadow: 0 0 14px rgba(255,255,255,0.9);
+}
+
+/* Firefox */
+#volume_slider::-moz-range-track {
+  height: 10px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+}
+#volume_slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+}
+
+
+
 #prev_song img,
 #next_song img {
     width: 35px;

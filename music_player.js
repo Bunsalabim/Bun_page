@@ -17,6 +17,14 @@ const page = document.getElementById("page");
 const takeOnMeBg = document.getElementById("take_on_me_bg");
 const timerIcon = document.getElementById("timerIcon");
 const linkIcon = document.getElementById("link_icon");
+const volumeSlider = document.getElementById("volume_slider");
+const volumeIcon = document.getElementById("volume_icon");
+
+if (volumeSlider) {
+  audioPlayer.volume = Number(volumeSlider.value);
+}
+
+
 
 
 // --- State ---
@@ -277,6 +285,21 @@ audioPlayer.addEventListener("timeupdate", () => {
 // --- Initial Setup ---
 loadSong(currentSongIndex, false);
 
+if (volumeSlider) {
+  // default volume (matches slider default)
+  audioPlayer.volume = Number(volumeSlider.value);
+
+  volumeSlider.addEventListener("input", () => {
+    audioPlayer.volume = Number(volumeSlider.value);
+
+    // Optional: swap icon if you have these files
+    if (volumeIcon) {
+      if (audioPlayer.volume === 0) volumeIcon.src = "music_player/volume_mute.png";
+      else if (audioPlayer.volume < 0.35) volumeIcon.src = "music_player/volume_low.png";
+      else volumeIcon.src = "music_player/volume.png";
+    }
+  });
+}
 // --- Walking character click ---
 if (circle_walk) {
     circle_walk.addEventListener("click", () => {
