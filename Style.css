@@ -897,7 +897,7 @@ body.take_on_me #bg_image {
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
 }
 
-/* Volume container - LEFT outside */
+/* volume container - LEFT outside */
 #volume_side {
   position: absolute;
   left: -60px;
