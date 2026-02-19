@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         enemy.classList.add("enemy");
         enemy.style.position = "fixed";
-        enemy.style.bottom = "70px";
+        enemy.style.bottom = "50px";
         enemy.style.width = size + "px";
         enemy.style.zIndex = zIndex;
 
